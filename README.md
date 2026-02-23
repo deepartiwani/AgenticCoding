@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+# my-commercetools-store
+
+A modern, production-ready e-commerce storefront built with **Next.js 16 (App Router)**, **React 19**, **TypeScript 5**, and **Tailwind CSS v4**. Powered by commercetools Composable Commerce.
+
+---
+
+## Features
+
+- **Authentication:** Login, signup, and cookie-based session management
+- **Product Catalog:** Category browsing, product detail pages, search with filters and sorting
+- **Cart & Checkout:** Add to cart, update quantities, checkout flow, order confirmation
+- **Order History:** View past orders by customer email
+- **Responsive Design:** Mobile-first, dark mode, custom vibrant theme
+- **Server Components:** Data fetching and rendering on the server for performance and SEO
+- **commercetools Integration:** All data via commercetools Platform SDK
+
+---
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── layout.tsx            # Root layout (fonts, globals)
+│   ├── page.tsx              # Root route (redirects to /login)
+│   ├── globals.css           # Tailwind v4 + custom utilities
+│   ├── cart/                 # Cart page & actions
+│   ├── checkout/             # Checkout flow & confirmation
+│   ├── orders/               # My Orders page
+│   ├── categories/           # All-categories browse page
+│   ├── category/[slug]/      # Category listing (PLP)
+│   ├── home/                 # Authenticated home/landing
+│   ├── login/, signup/       # Auth pages (useActionState)
+│   ├── product/[slug]/       # Product Detail Page (PDP)
+│   └── components/           # Shared UI components
+├── lib/
+│   └── commercetools.ts      # SDK client + data helpers
+```
+
+---
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies:**
+	```bash
+	npm install
+	```
+
+2. **Set up environment variables:**
+	Create a `.env.local` file in the project root with:
+	```
+	CTP_PROJECT_KEY=your-key
+	CTP_CLIENT_ID=your-id
+	CTP_CLIENT_SECRET=your-secret
+	CTP_AUTH_URL=https://auth.commercetools.com
+	CTP_API_URL=https://api.commercetools.com
+	```
+
+3. **Run the development server:**
+	```bash
+	npm run dev
+	```
+	Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## Docker
+
+To build and run the app in Docker:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+docker build -t my-commercetools-store .
+docker run --env-file .env.local -p 3000:3000 my-commercetools-store
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev` — Start development server
+- `npm run build` — Build for production
+- `npm start` — Start production server
+- `npm run lint` — Run ESLint
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Customization & Theming
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Uses Tailwind CSS v4 with custom utilities: `.btn-vibrant`, `.card-glow`, `.text-gradient`, etc.
+- Fully responsive and supports dark mode.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Known Issues & TODO
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- User profile/account page is in progress
+- Wishlist and route protection (middleware) are pending
+- See AGENT_CONTEXT.md for full implementation status and open items
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Contributing
+
+See `.github/copilot-instructions.md` and `AGENT_CONTEXT.md` for coding conventions and project context.
+
+---
+
+## License
+
+Proprietary — for internal use only.
