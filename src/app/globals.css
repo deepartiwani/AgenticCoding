@@ -24,3 +24,56 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Vibrant animated gradient for hero */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+  background-size: 300% 300%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Vibrant button shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.btn-vibrant {
+  background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899, #a855f7, #6366f1);
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
+/* Glow effect for cards */
+.card-glow:hover {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3), 0 0 40px rgba(236, 72, 153, 0.15);
+}
+
+/* Gradient text utility */
+.text-gradient {
+  background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Promo gradient */
+.promo-gradient {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 30%, #a855f7 50%, #d946ef 70%, #ec4899 100%);
+}
+
+/* Footer gradient */
+.footer-gradient {
+  background: linear-gradient(180deg, #faf5ff 0%, #f0e7fe 50%, #ede9fe 100%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .footer-gradient {
+    background: linear-gradient(180deg, #0a0a0a 0%, #1a0a2e 50%, #0f172a 100%);
+  }
+}
