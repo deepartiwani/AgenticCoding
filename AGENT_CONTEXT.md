@@ -140,9 +140,9 @@ Stored in `.env.local` (git-ignored).
 | Mobile-first responsive design                  | ✅ Complete |       |
 | Add to Cart (Cart API, Context, cookie)         | ✅ Complete |       |
 | Live cart item count badge                      | ✅ Complete |       |
-| Cart page (line items, qty, summary)            | ✅ Complete |       |
-| Checkout flow (address, payment, order)         | ✅ Complete |       |
-| Order confirmation page                         | ✅ Complete |       |
+| Cart page (line items, qty, summary)            | ✅ Complete | Fully implemented: add/update/remove, summary, checkout link |
+| Checkout flow (address, payment, order)         | ✅ Complete | Fully implemented: address, payment, order placement, cart reset |
+| Order confirmation page                         | ✅ Complete | Fully implemented: order details, paymentState: 'Pending' |
 | My Orders page                                 | ✅ Complete |       |
 | Shared components (ProductCard, Spinner, etc.)  | ✅ Complete |       |
 | State management (CartContext)                  | ✅ Complete | Using React Context |

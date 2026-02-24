@@ -20,7 +20,7 @@ A modern, production-ready e-commerce storefront built with **Next.js 16 (App Ro
 
 - **Authentication:** Login, signup, and cookie-based session management
 - **Product Catalog:** Category browsing, product detail pages, search with filters and sorting
-- **Cart & Checkout:** Add to cart, update quantities, checkout flow, order confirmation
+**Cart & Checkout:** Add to cart, update quantities, full checkout flow, order confirmation
 - **Order History:** View past orders by customer email
 - **User Profile:** Account page (in progress)
 - **Responsive Design:** Mobile-first, dark mode, custom vibrant theme
