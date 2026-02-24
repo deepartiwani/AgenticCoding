@@ -1,9 +1,20 @@
 
 # my-commercetools-store
 
+
 A modern, production-ready e-commerce storefront built with **Next.js 16 (App Router)**, **React 19**, **TypeScript 5**, and **Tailwind CSS v4**. Powered by commercetools Composable Commerce.
 
 ---
+
+## Implementation Status (2026-02-24)
+
+- All core e-commerce flows are implemented: authentication, product catalog, cart, checkout, and order history.
+- User profile/account page is in progress.
+- Wishlist and route protection (middleware) are pending.
+- See `AGENT_CONTEXT.md` for a detailed checklist and recent changes.
+
+---
+
 
 ## Features
 
@@ -11,6 +22,7 @@ A modern, production-ready e-commerce storefront built with **Next.js 16 (App Ro
 - **Product Catalog:** Category browsing, product detail pages, search with filters and sorting
 - **Cart & Checkout:** Add to cart, update quantities, checkout flow, order confirmation
 - **Order History:** View past orders by customer email
+- **User Profile:** Account page (in progress)
 - **Responsive Design:** Mobile-first, dark mode, custom vibrant theme
 - **Server Components:** Data fetching and rendering on the server for performance and SEO
 - **commercetools Integration:** All data via commercetools Platform SDK
@@ -29,7 +41,7 @@ src/
 │   ├── checkout/             # Checkout flow & confirmation
 │   ├── orders/               # My Orders page
 │   ├── categories/           # All-categories browse page
-│   ├── category/[slug]/      # Category listing (PLP)
+│   ├── category/[slug]/      # Category listing (PLP) with filters
 │   ├── home/                 # Authenticated home/landing
 │   ├── login/, signup/       # Auth pages (useActionState)
 │   ├── product/[slug]/       # Product Detail Page (PDP)
@@ -92,17 +104,20 @@ docker run --env-file .env.local -p 3000:3000 my-commercetools-store
 
 ---
 
+
 ## Known Issues & TODO
 
 - User profile/account page is in progress
 - Wishlist and route protection (middleware) are pending
-- See AGENT_CONTEXT.md for full implementation status and open items
+- Duplicated `getLocalizedString()` helper is now consolidated in `src/lib/utils.ts`
+- See `AGENT_CONTEXT.md` for full implementation status and open items
 
 ---
 
+
 ## Contributing
 
-See `.github/copilot-instructions.md` and `AGENT_CONTEXT.md` for coding conventions and project context.
+See `.github/copilot-instructions.md` and `AGENT_CONTEXT.md` for coding conventions, architecture, and project context.
 
 ---
 

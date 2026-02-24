@@ -149,6 +149,7 @@ Stored in `.env.local` (git-ignored).
 | commercetools integration (data helpers)        | ✅ Complete |       |
 | Styling (Tailwind, custom utilities)            | ✅ Complete |       |
 | Localization helper (getLocalizedString)        | ✅ Complete  | Now shared in src/lib/utils.ts |
+| Localization helper (getLocalizedString)        | ✅ Complete  | Now consolidated in src/lib/utils.ts |
 | Search functionality                           | ✅ Complete | Fully wired: API, filters, sort, UI |
 | User profile / account page                     | ⏳ In Progress | Basic structure exists |
 | Wishlist                                       | ⬜ Pending   |       |
@@ -166,7 +167,7 @@ Stored in `.env.local` (git-ignored).
 
 ## Known Issues & Tech Debt
 
-1. **Duplicated `getLocalizedString()`** — The helper is copy-pasted in `categories/page.tsx`, `category/[slug]/page.tsx`, `product/[slug]/page.tsx`, etc. Should be consolidated into `src/lib/utils.ts` or similar.
+1. **Duplicated `getLocalizedString()`** — Consolidated into `src/lib/utils.ts` as of 2026-02-23. Remove old copies as encountered.
 2. **No auth middleware** — Authenticated routes (`/home`, `/categories`, etc.) are not protected. A user can access them without logging in.
 3. **Root layout metadata** — `layout.tsx` still has the default "Create Next App" title/description. Should be updated to match the store branding.
 4. **Client-credentials flow only** — The SDK uses machine-to-machine auth. Customer-specific carts/orders will eventually need a customer-scoped token or password flow.
@@ -178,6 +179,8 @@ Stored in `.env.local` (git-ignored).
 
 | Date       | Agent / Author   | Summary                                                      |
 |------------|------------------|--------------------------------------------------------------|
+| 2026-02-23 | GitHub Copilot   | Updated implementation status checklist and pending items     |
+| 2026-02-24 | GitHub Copilot   | Updated README, AGENT_CONTEXT, and context.md for latest implementation status, consolidated getLocalizedString, clarified pending items |
 | 2026-02-23 | GitHub Copilot   | Updated implementation status checklist and pending items     |
 | 2026-02-20 | Copilot          | Added themed Spinner component and loading files for all routes |
 | 2026-02-20 | Copilot          | Redesigned categories & category pages, added filter sidebar |
