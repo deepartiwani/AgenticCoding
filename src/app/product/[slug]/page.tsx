@@ -1,8 +1,12 @@
 import { apiRoot, getDefaultDistributionChannelId } from "@/lib/commercetools";
+import Breadcrumbs from "./Breadcrumbs";
+import { getCategoryBreadcrumbs } from "@/lib/categoryBreadcrumbs";
 import type { ProductProjection } from "@commercetools/platform-sdk";
 import Link from "next/link";
 import ProductImages from "./ProductImages";
+
 import AddToCartButton from "./AddToCartButton";
+import RelatedProductsCarousel from "./RelatedProductsCarousel";
 
 import { getLocalizedString } from "@/lib/utils";
 
@@ -84,18 +88,49 @@ export default async function ProductDetailPage({
 
   const attributes = product.masterVariant.attributes || [];
 
+  // Find related product IDs from attributes (assuming attribute name contains 'related')
+    let relatedProductIds: string[] = [];
+    const relatedAttr = attributes.find((attr) => attr.name.toLowerCase().includes("related"));
+    if (relatedAttr) {
+      if (Array.isArray(relatedAttr.value)) {
+        relatedProductIds = relatedAttr.value.map((item: string | Record<string, unknown>) => {
+          if (typeof item === "object" && item.id) {
+            return item.id;
+          } else if (typeof item === "string") {
+            try {
+              const parsed = JSON.parse(item);
+              return parsed.id || item;
+            } catch {
+              return item;
+            }
+          }
+          return String(item);
+        });
+      } else if (typeof relatedAttr.value === "object" && relatedAttr.value?.id) {
+        relatedProductIds = [relatedAttr.value.id];
+      } else if (typeof relatedAttr.value === "string") {
+        try {
+          const parsed = JSON.parse(relatedAttr.value);
+          relatedProductIds = [parsed.id || relatedAttr.value];
+        } catch {
+          relatedProductIds = [relatedAttr.value];
+        }
+      }
+    }
+
+  // Get the first category for the product (for breadcrumbs)
+  let breadcrumbs: import("@commercetools/platform-sdk").Category[] = [];
+  if (product.categories && product.categories.length > 0) {
+    breadcrumbs = await getCategoryBreadcrumbs(product.categories[0].id);
+  }
+
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       <div className="mx-auto max-w-7xl px-6 py-12">
-        {/* Back link */}
-        <Link
-          href="/home"
-          className="inline-flex items-center text-sm font-medium text-violet-600 transition hover:text-pink-500 dark:text-violet-400"
-        >
-          ← Back to Products
-        </Link>
+        {/* Breadcrumbs */}
+        <Breadcrumbs categories={breadcrumbs} productName={name} />
 
-        <div className="mt-8 grid grid-cols-1 gap-12 lg:grid-cols-2">
+        <div className="mt-2 grid grid-cols-1 gap-12 lg:grid-cols-2">
           {/* Product Images */}
           <ProductImages images={images} name={name} />
 
@@ -147,18 +182,28 @@ export default async function ProductDetailPage({
                   Details
                 </h2>
                 <dl className="mt-3 space-y-2">
-                  {attributes.map((attr) => (
-                    <div key={attr.name} className="flex gap-3 text-sm">
-                      <dt className="font-medium text-zinc-700 dark:text-zinc-300 capitalize">
-                        {attr.name.replace(/-/g, " ")}:
-                      </dt>
-                      <dd className="text-zinc-500 dark:text-zinc-400">
-                        {typeof attr.value === "object" && attr.value?.label
-                          ? attr.value.label
-                          : String(attr.value)}
-                      </dd>
-                    </div>
-                  ))}
+                  {attributes
+                    .filter((attr) => !attr.name.toLowerCase().includes("related"))
+                    .map((attr) => (
+                      <div key={attr.name} className="flex gap-3 text-sm">
+                        <dt className="font-medium text-zinc-700 dark:text-zinc-300 capitalize">
+                          {attr.name.replace(/-/g, " ")}: 
+                        </dt>
+                        <dd className="text-zinc-500 dark:text-zinc-400">
+                          {Array.isArray(attr.value)
+                            ? attr.value
+                                .map((item) =>
+                                  typeof item === "object"
+                                    ? item.label || item.name || JSON.stringify(item)
+                                    : String(item)
+                                )
+                                .join(", ")
+                            : typeof attr.value === "object" && attr.value?.label
+                            ? attr.value.label
+                            : String(attr.value)}
+                        </dd>
+                      </div>
+                    ))}
                 </dl>
               </div>
             )}
@@ -170,6 +215,11 @@ export default async function ProductDetailPage({
             />
           </div>
         </div>
+
+        {/* Related Products Carousel (full width row below main grid) */}
+        {relatedProductIds.length > 0 && (
+          <RelatedProductsCarousel productIds={relatedProductIds} />
+        )}
       </div>
     </div>
   );

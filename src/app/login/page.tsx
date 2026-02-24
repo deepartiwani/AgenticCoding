@@ -27,6 +27,7 @@ export default function LoginPage() {
           </div>
         )}
 
+
         <form action={formAction} className="space-y-4">
           <div>
             <label
@@ -65,6 +66,14 @@ export default function LoginPage() {
 
           <SubmitButton />
         </form>
+        <div className="mt-4 text-center">
+          <Link
+            href="/forgot-password"
+            className="text-sm text-violet-600 hover:underline dark:text-violet-400"
+          >
+            Forgot password?
+          </Link>
+        </div>
 
         <p className="mt-6 text-center text-sm text-zinc-500 dark:text-zinc-400">
           Don&apos;t have an account?{" "}
