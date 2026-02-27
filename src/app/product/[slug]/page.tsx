@@ -184,26 +184,52 @@ export default async function ProductDetailPage({
                 <dl className="mt-3 space-y-2">
                   {attributes
                     .filter((attr) => !attr.name.toLowerCase().includes("related"))
-                    .map((attr) => (
-                      <div key={attr.name} className="flex gap-3 text-sm">
-                        <dt className="font-medium text-zinc-700 dark:text-zinc-300 capitalize">
-                          {attr.name.replace(/-/g, " ")}: 
-                        </dt>
-                        <dd className="text-zinc-500 dark:text-zinc-400">
-                          {Array.isArray(attr.value)
-                            ? attr.value
-                                .map((item) =>
-                                  typeof item === "object"
-                                    ? item.label || item.name || JSON.stringify(item)
-                                    : String(item)
-                                )
-                                .join(", ")
-                            : typeof attr.value === "object" && attr.value?.label
-                            ? attr.value.label
-                            : String(attr.value)}
-                        </dd>
-                      </div>
-                    ))}
+                    .map((attr) => {
+                      const renderAttributeValue = (): string => {
+                        if (Array.isArray(attr.value)) {
+                          return attr.value
+                            .map((item) => {
+                              if (typeof item === "object" && item !== null) {
+                                const obj = item as Record<string, unknown>;
+                                if ("label" in obj) return String(obj.label);
+                                if ("name" in obj) return String(obj.name);
+                                // If it's a localized string (all keys are language codes)
+                                const keys = Object.keys(obj);
+                                if (keys.every(k => /^[a-z]{2}(-[A-Z]{2})?$/.test(k))) {
+                                  return getLocalizedString(obj as Record<string, string>);
+                                }
+                                return JSON.stringify(item);
+                              }
+                              return String(item);
+                            })
+                            .join(", ");
+                        }
+                        
+                        // Handle non-array values
+                        if (typeof attr.value === "object" && attr.value !== null) {
+                          const obj = attr.value as Record<string, unknown>;
+                          if ("label" in obj) return String(obj.label);
+                          // Check if it's a localized object
+                          const keys = Object.keys(obj);
+                          if (keys.every(k => /^[a-z]{2}(-[A-Z]{2})?$/.test(k))) {
+                            return getLocalizedString(obj as Record<string, string>);
+                          }
+                        }
+                        
+                        return String(attr.value);
+                      };
+
+                      return (
+                        <div key={attr.name} className="flex gap-3 text-sm">
+                          <dt className="font-medium text-zinc-700 dark:text-zinc-300 capitalize">
+                            {attr.name.replace(/-/g, " ")}: 
+                          </dt>
+                          <dd className="text-zinc-500 dark:text-zinc-400">
+                            {renderAttributeValue()}
+                          </dd>
+                        </div>
+                      );
+                    })}
                 </dl>
               </div>
             )}

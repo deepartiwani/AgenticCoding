@@ -179,6 +179,7 @@ Stored in `.env.local` (git-ignored).
 
 | Date       | Agent / Author   | Summary                                                      |
 |------------|------------------|--------------------------------------------------------------|
+| 2026-02-27 | GitHub Copilot   | Fixed product page error: localized objects in attributes now properly resolved with getLocalizedString |
 | 2026-02-23 | GitHub Copilot   | Updated implementation status checklist and pending items     |
 | 2026-02-24 | GitHub Copilot   | Updated README, AGENT_CONTEXT, and context.md for latest implementation status, consolidated getLocalizedString, clarified pending items |
 | 2026-02-23 | GitHub Copilot   | Updated implementation status checklist and pending items     |
