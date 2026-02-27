@@ -33,6 +33,13 @@ export default function Navbar({ customerEmail }: { customerEmail?: string }) {
         <h1 className="shrink-0 text-xl font-bold tracking-tight">
           <Link href="/home" className="text-gradient">🛍️ MyStore</Link>
         </h1>
+        {/* Categories Link */}
+        <Link
+          href="/categories"
+          className="shrink-0 px-3 py-2 text-sm font-medium text-gray-700 hover:text-violet-600 dark:text-gray-300 dark:hover:text-violet-400 transition"
+        >
+          Categories
+        </Link>
         {/* Search bar with dropdown */}
         <SearchBar searchRef={searchRef} />
         {/* Right section: Mini Cart + Profile */}
